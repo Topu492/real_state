@@ -1,1 +1,1 @@
-cgvnhfghnfg
+<a href="{{ route('admin_profile') }}">Profile</a>
