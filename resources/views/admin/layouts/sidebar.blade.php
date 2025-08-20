@@ -9,7 +9,7 @@
 
         <ul class="sidebar-menu">
 
-            <li class=""><a class="nav-link" href="{{ route('admin_dashboard') }}"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+            <li class="{{ Request::is('admin/dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_dashboard') }}"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
 
             <li class="nav-item dropdown ">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-folder"></i><span>Website Setting</span></a>
@@ -49,9 +49,9 @@
 
             <li class=""><a class="nav-link" href=""><i class="far fa-file"></i> <span>Subscriber</span></a></li>
 
-            <li class=""><a class="nav-link" href="{{ route('admin_profile') }}"><i class="far fa-file"></i> <span>Edit Profile</span></a></li>
+            <li class="{{ Request::is('admin/profile') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_profile') }}"><i class="far fa-file"></i> <span>Edit Profile</span></a></li>
 
-            <li><a class="nav-link" href=""><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
+            <li><a class="nav-link" href="{{ route('admin_logout') }}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
 
         </ul>
     </aside>

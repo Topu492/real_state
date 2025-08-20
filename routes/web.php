@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+// front 
+
 Route::get('/', [FrontController::class, 'index'])->name('home');
+Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
 
 // user
 
