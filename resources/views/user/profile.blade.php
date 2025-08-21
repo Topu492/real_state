@@ -1,4 +1,7 @@
-<div class="page-top" style="background-image">
+@extends('front.layouts.master')
+
+@section('main_content')
+<div class="page-top" style="background-image:">
     <div class="bg"></div>
     <div class="container">
         <div class="row">
@@ -14,6 +17,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-12">
                 <div class="card">
+                    @include('user.sidebar.index')
                 </div>
             </div>
             <div class="col-lg-9 col-md-12">
@@ -71,3 +75,4 @@
         </div>
     </div>
 </div>
+@endsection
