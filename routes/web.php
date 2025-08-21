@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 // front 
 
 Route::get('/', [FrontController::class, 'index'])->name('home');
+Route::get('/select-user', [FrontController::class, 'select_user'])->name('select_user');
 Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
 
 // user

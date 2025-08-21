@@ -50,7 +50,7 @@
                         </li>
                       
                         <li class="nav-item">
-                            <a href="" class="nav-link">Login</a>
+                            <a href="{{ route('select_user') }}" class="nav-link">Login</a>
                         </li>
                         
                     </ul>
