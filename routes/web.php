@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Agent\AgentController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,29 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [FrontController::class, 'index'])->name('home');
 Route::get('/select-user', [FrontController::class, 'select_user'])->name('select_user');
 Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
+
+
+// Agent Section
+Route::middleware('agent')->prefix('agent')->group(function(){
+    Route::get('/dashboard', [AgentController::class, 'dashboard'])->name('agent_dashboard');
+    Route::get('/profile', [AgentController::class, 'profile'])->name('agent_profile');
+    Route::post('/profile', [AgentController::class, 'profile_submit'])->name('agent_profile_submit');
+
+});
+
+Route::prefix('agent')->group(function(){
+    Route::get('/', function () {return redirect()->route('agent_login');});
+    Route::get('/registration', [AgentController::class, 'registration'])->name('agent_registration');
+    Route::post('/registration', [AgentController::class, 'registration_submit'])->name('agent_registration_submit');
+    Route::get('/registration-verify/{token}/{email}', [AgentController::class, 'registration_verify'])->name('agent_registration_verify');
+    Route::get('/login', [AgentController::class, 'login'])->name('agent_login');
+    Route::post('/login', [AgentController::class, 'login_submit'])->name('agent_login_submit');
+    Route::get('/forget-password', [AgentController::class, 'forget_password'])->name('agent_forget_password');
+    Route::post('/forget-password', [AgentController::class, 'forget_password_submit'])->name('agent_forget_password_submit');
+    Route::get('/reset-password/{token}/{email}', [AgentController::class, 'reset_password'])->name('agent_reset_password');
+    Route::post('/reset-password/{token}/{email}', [AgentController::class, 'reset_password_submit'])->name('agent_reset_password_submit');
+    Route::get('/logout', [AgentController::class, 'logout'])->name('agent_logout');
+});
 
 // user
 

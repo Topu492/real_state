@@ -22,8 +22,8 @@
                         <div><a href="{{ route('login') }}">Customer Login</a></div>
                     </div>
                     <div class="select-agent">
-                        <div><a href="">Agent Registration</a></div>
-                        <div><a href="">Agent Login</a></div>
+                        <div><a href="{{ route('agent_registration') }}">Agent Registration</a></div>
+                        <div><a href="{{ route('agent_login') }}">Agent Login</a></div>
                     </div>
                 </div>  
             </div>
