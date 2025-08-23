@@ -6,7 +6,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header d-flex justify-content-between">
-            <h1>Create Package</h1>
+            <h1>Create-Package</h1>
             <div class="ml-auto">
                 <a href="{{ route('admin_package_index') }}" class="btn btn-primary"><i class="fas fa-eye"></i> View All</a>
             </div>
