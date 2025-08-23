@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminPackageController;
 use App\Http\Controllers\Agent\AgentController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\User\UserController;
@@ -65,6 +66,13 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin_dashboard');
     Route::get('/profile', [AdminController::class, 'profile'])->name('admin_profile');
     Route::post('/profile', [AdminController::class, 'profile_submit'])->name('admin_profile_submit');
+    Route::get('/package/index', [AdminPackageController::class, 'index'])->name('admin_package_index');
+    Route::get('/package/create', [AdminPackageController::class, 'create'])->name('admin_package_create');
+    Route::post('/package/store', [AdminPackageController::class, 'store'])->name('admin_package_store');
+    Route::get('/package/edit/{id}', [AdminPackageController::class, 'edit'])->name('admin_package_edit');
+    Route::post('/package/update/{id}', [AdminPackageController::class, 'update'])->name('admin_package_update');
+    Route::get('/package/delete/{id}', [AdminPackageController::class, 'delete'])->name('admin_package_delete');
+
 
 });
 

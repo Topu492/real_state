@@ -31,7 +31,7 @@
                 </ul>
             </li>
 
-            <li class=""><a class="nav-link" href=""><i class="far fa-file"></i> <span>Package</span></a></li>
+            <li class="{{ Request::is('admin/package/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_package_index') }}"><i class="far fa-file"></i> <span>Package</span></a></li>
 
             <li class=""><a class="nav-link" href=""><i class="far fa-file"></i> <span>Orders</span></a></li>
 
