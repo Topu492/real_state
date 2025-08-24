@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminLocationController;
 use App\Http\Controllers\Admin\AdminPackageController;
+use App\Http\Controllers\Admin\AdminTypeController;
 use App\Http\Controllers\Agent\AgentController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\User\UserController;
@@ -81,6 +82,14 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/location/edit/{id}', [AdminLocationController::class, 'edit'])->name('admin_location_edit');
     Route::post('/location/update/{id}', [AdminLocationController::class, 'update'])->name('admin_location_update');
     Route::get('/location/delete/{id}', [AdminLocationController::class, 'delete'])->name('admin_location_delete');
+
+    Route::get('/type/index', [AdminTypeController::class, 'index'])->name('admin_type_index');
+    Route::get('/type/create', [AdminTypeController::class, 'create'])->name('admin_type_create');
+    Route::post('/type/store', [AdminTypeController::class, 'store'])->name('admin_type_store');
+    Route::get('/type/edit/{id}', [AdminTypeController::class, 'edit'])->name('admin_type_edit');
+    Route::post('/type/update/{id}', [AdminTypeController::class, 'update'])->name('admin_type_update');
+    Route::get('/type/delete/{id}', [AdminTypeController::class, 'delete'])->name('admin_type_delete');
+
 });
 
 Route::prefix('admin')->group(function () {
