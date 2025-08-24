@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminLocationController;
 use App\Http\Controllers\Admin\AdminPackageController;
 use App\Http\Controllers\Agent\AgentController;
 use App\Http\Controllers\Front\FrontController;
@@ -66,6 +67,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin_dashboard');
     Route::get('/profile', [AdminController::class, 'profile'])->name('admin_profile');
     Route::post('/profile', [AdminController::class, 'profile_submit'])->name('admin_profile_submit');
+    
     Route::get('/package/index', [AdminPackageController::class, 'index'])->name('admin_package_index');
     Route::get('/package/create', [AdminPackageController::class, 'create'])->name('admin_package_create');
     Route::post('/package/store', [AdminPackageController::class, 'store'])->name('admin_package_store');
@@ -73,7 +75,12 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::post('/package/update/{id}', [AdminPackageController::class, 'update'])->name('admin_package_update');
     Route::get('/package/delete/{id}', [AdminPackageController::class, 'delete'])->name('admin_package_delete');
 
-
+   Route::get('/location/index', [AdminLocationController::class, 'index'])->name('admin_location_index');
+    Route::get('/location/create', [AdminLocationController::class, 'create'])->name('admin_location_create');
+    Route::post('/location/store', [AdminLocationController::class, 'store'])->name('admin_location_store');
+    Route::get('/location/edit/{id}', [AdminLocationController::class, 'edit'])->name('admin_location_edit');
+    Route::post('/location/update/{id}', [AdminLocationController::class, 'update'])->name('admin_location_update');
+    Route::get('/location/delete/{id}', [AdminLocationController::class, 'delete'])->name('admin_location_delete');
 });
 
 Route::prefix('admin')->group(function () {
