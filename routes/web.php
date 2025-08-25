@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAmenityController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminLocationController;
 use App\Http\Controllers\Admin\AdminPackageController;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-// front 
+// front
 
 Route::get('/', [FrontController::class, 'index'])->name('home');
 Route::get('/select-user', [FrontController::class, 'select_user'])->name('select_user');
@@ -21,14 +22,14 @@ Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
 Route::get('/pricing', [FrontController::class, 'pricing'])->name('pricing');
 
 // Agent Section
-Route::middleware('agent')->prefix('agent')->group(function(){
+Route::middleware('agent')->prefix('agent')->group(function () {
     Route::get('/dashboard', [AgentController::class, 'dashboard'])->name('agent_dashboard');
     Route::get('/profile', [AgentController::class, 'profile'])->name('agent_profile');
     Route::post('/profile', [AgentController::class, 'profile_submit'])->name('agent_profile_submit');
 
 });
 
-Route::prefix('agent')->group(function(){
+Route::prefix('agent')->group(function () {
     Route::get('/', function () {return redirect()->route('agent_login');});
     Route::get('/registration', [AgentController::class, 'registration'])->name('agent_registration');
     Route::post('/registration', [AgentController::class, 'registration_submit'])->name('agent_registration_submit');
@@ -68,7 +69,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin_dashboard');
     Route::get('/profile', [AdminController::class, 'profile'])->name('admin_profile');
     Route::post('/profile', [AdminController::class, 'profile_submit'])->name('admin_profile_submit');
-    
+
     Route::get('/package/index', [AdminPackageController::class, 'index'])->name('admin_package_index');
     Route::get('/package/create', [AdminPackageController::class, 'create'])->name('admin_package_create');
     Route::post('/package/store', [AdminPackageController::class, 'store'])->name('admin_package_store');
@@ -76,7 +77,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::post('/package/update/{id}', [AdminPackageController::class, 'update'])->name('admin_package_update');
     Route::get('/package/delete/{id}', [AdminPackageController::class, 'delete'])->name('admin_package_delete');
 
-   Route::get('/location/index', [AdminLocationController::class, 'index'])->name('admin_location_index');
+    Route::get('/location/index', [AdminLocationController::class, 'index'])->name('admin_location_index');
     Route::get('/location/create', [AdminLocationController::class, 'create'])->name('admin_location_create');
     Route::post('/location/store', [AdminLocationController::class, 'store'])->name('admin_location_store');
     Route::get('/location/edit/{id}', [AdminLocationController::class, 'edit'])->name('admin_location_edit');
@@ -89,6 +90,13 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/type/edit/{id}', [AdminTypeController::class, 'edit'])->name('admin_type_edit');
     Route::post('/type/update/{id}', [AdminTypeController::class, 'update'])->name('admin_type_update');
     Route::get('/type/delete/{id}', [AdminTypeController::class, 'delete'])->name('admin_type_delete');
+
+    Route::get('/amenity/index', [AdminAmenityController::class, 'index'])->name('admin_amenity_index');
+    Route::get('/amenity/create', [AdminAmenityController::class, 'create'])->name('admin_amenity_create');
+    Route::post('/amenity/store', [AdminAmenityController::class, 'store'])->name('admin_amenity_store');
+    Route::get('/amenity/edit/{id}', [AdminAmenityController::class, 'edit'])->name('admin_amenity_edit');
+    Route::post('/amenity/update/{id}', [AdminAmenityController::class, 'update'])->name('admin_amenity_update');
+    Route::get('/amenity/delete/{id}', [AdminAmenityController::class, 'delete'])->name('admin_amenity_delete');
 
 });
 
