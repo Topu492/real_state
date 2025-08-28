@@ -10,4 +10,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Agent extends Authenticatable
 {
     use HasFactory, Notifiable;
+
+    public function orders(){
+        $this->hasMany(Order::class);
+    }
 }

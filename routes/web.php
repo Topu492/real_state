@@ -26,6 +26,7 @@ Route::middleware('agent')->prefix('agent')->group(function () {
     Route::get('/dashboard', [AgentController::class, 'dashboard'])->name('agent_dashboard');
     Route::get('/profile', [AgentController::class, 'profile'])->name('agent_profile');
     Route::post('/profile', [AgentController::class, 'profile_submit'])->name('agent_profile_submit');
+    Route::get('/payment', [AgentController::class, 'payment'])->name('agent_payment');
 
 });
 

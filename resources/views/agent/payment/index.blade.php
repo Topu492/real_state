@@ -1,7 +1,7 @@
 @extends('front.layouts.master')
 
 @section('main_content')
-<div class="page-top" style="background-image: url({{ asset('uploads/'.$global_setting->banner) }})">
+<div class="page-top" style="background-image:">
     <div class="bg"></div>
     <div class="container">
         <div class="row">
@@ -43,7 +43,7 @@
                     <table class="table table-bordered upgrade-plan-table">
                         <tr>
                             <td>
-                                <form action="{{ route('agent_paypal') }}" method="post">
+                                <form action="" method="post">
                                 @csrf
                                 <select name="package_id" class="form-control select2">
                                     @foreach($packages as $package)
@@ -51,14 +51,14 @@
                                     @endforeach
                                 </select>
                             </td>
-                            <td>
+                            {{-- <td>
                                 <button type="submit" class="btn btn-secondary btn-sm buy-button">Pay with PayPal</button>
                                 </form>
-                            </td>
+                            </td> --}}
                         </tr>
                         <tr>
                             <td>
-                                <form action="{{ route('agent_stripe') }}" method="post">
+                                <form action="" method="post">
                                 @csrf
                                 <select name="package_id" class="form-control select2">
                                     @foreach($packages as $package)

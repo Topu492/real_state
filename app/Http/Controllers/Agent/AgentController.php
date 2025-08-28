@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Agent;
 use App\Http\Controllers\Controller;
 use App\Mail\Websitemail;
 use App\Models\Agent;
+use App\Models\Order;
+use App\Models\Package;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -208,6 +210,22 @@ class AgentController extends Controller
         $agent->update();
 
         return redirect()->back()->with('success', 'Profile updated successfully');
+    }
+
+     public function payment()
+    {
+        $total_current_order = Order::where('agent_id', Auth::guard('agent')->user()->id)->count();
+        $packages = Package::orderBy('id','asc')->get();
+        $current_order = Order::where('agent_id', Auth::guard('agent')->user()->id)->where('currently_active',1)->first();
+
+        // How many days left for the current order
+         if($current_order){
+            $days_left = (strtotime($current_order->expire_date) - strtotime(date('Y-m-d'))) / (60 * 60 * 24);
+        } else {
+            $days_left = 0;
+        }
+
+        return view('agent.payment.index', compact('packages','total_current_order', 'current_order', 'days_left'));
     }
 
 }

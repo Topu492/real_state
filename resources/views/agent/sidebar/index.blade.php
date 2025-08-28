@@ -3,7 +3,7 @@
         <a href="{{ route('agent_dashboard') }}">Dashboard</a>
     </li>
     <li class="list-group-item {{ Request::is('agent/payment') ? 'active' : '' }}">
-        <a href="">Make Payment</a>
+        <a href="{{ route('agent_payment') }}">Make Payment</a>
     </li>
     <li class="list-group-item {{ Request::is('agent/order') ? 'active' : '' }}">
         <a href="">Orders</a>

@@ -83,7 +83,7 @@
                             </li>
                         </ul>
                         <div class="buy">
-                            <a href="" class="btn btn-primary">
+                            <a href="{{ route('agent_payment') }}" class="btn btn-primary">
                                 Choose Plan
                             </a>
                         </div>
