@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAgentController;
 use App\Http\Controllers\Admin\AdminAmenityController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminCustomerController;
@@ -109,6 +110,13 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/customer/edit/{id}', [AdminCustomerController::class, 'edit'])->name('admin_customer_edit');
     Route::post('/customer/update/{id}', [AdminCustomerController::class, 'update'])->name('admin_customer_update');
     Route::get('/customer/delete/{id}', [AdminCustomerController::class, 'delete'])->name('admin_customer_delete');
+
+     Route::get('/agent/index', [AdminAgentController::class, 'index'])->name('admin_agent_index');
+    Route::get('/agent/create', [AdminAgentController::class, 'create'])->name('admin_agent_create');
+    Route::post('/agent/store', [AdminAgentController::class, 'store'])->name('admin_agent_store');
+    Route::get('/agent/edit/{id}', [AdminAgentController::class, 'edit'])->name('admin_agent_edit');
+    Route::post('/agent/update/{id}', [AdminAgentController::class, 'update'])->name('admin_agent_update');
+    Route::get('/agent/delete/{id}', [AdminAgentController::class, 'delete'])->name('admin_agent_delete');
 
 });
 
