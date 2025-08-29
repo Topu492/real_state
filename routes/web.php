@@ -28,6 +28,8 @@ Route::middleware('agent')->prefix('agent')->group(function () {
     Route::post('/profile', [AgentController::class, 'profile_submit'])->name('agent_profile_submit');
     Route::get('/payment', [AgentController::class, 'payment'])->name('agent_payment');
     Route::get('/order', [AgentController::class, 'order'])->name('agent_order');
+    Route::get('/invoice/{order_id}', [AgentController::class, 'invoice'])->name('agent_invoice');
+    
 
 });
 
