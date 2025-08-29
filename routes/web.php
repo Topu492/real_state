@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminAmenityController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminCustomerController;
 use App\Http\Controllers\Admin\AdminLocationController;
+use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminPackageController;
 use App\Http\Controllers\Admin\AdminTypeController;
 use App\Http\Controllers\Agent\AgentController;
@@ -117,6 +118,8 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/agent/edit/{id}', [AdminAgentController::class, 'edit'])->name('admin_agent_edit');
     Route::post('/agent/update/{id}', [AdminAgentController::class, 'update'])->name('admin_agent_update');
     Route::get('/agent/delete/{id}', [AdminAgentController::class, 'delete'])->name('admin_agent_delete');
+    Route::get('/order/index', [AdminOrderController::class, 'index'])->name('admin_order_index');
+
 
 });
 
