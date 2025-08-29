@@ -6,7 +6,7 @@
         <a href="{{ route('agent_payment') }}">Make Payment</a>
     </li>
     <li class="list-group-item {{ Request::is('agent/order') ? 'active' : '' }}">
-        <a href="">Orders</a>
+        <a href="{{ route('agent_order') }}">Orders</a>
     </li>
     <li class="list-group-item {{ Request::is('agent/property/create') ? 'active' : '' }}">
         <a href="">Add Property</a>

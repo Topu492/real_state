@@ -228,6 +228,12 @@ class AgentController extends Controller
         return view('agent.payment.index', compact('packages','total_current_order', 'current_order', 'days_left'));
     }
 
+    public function order()
+    {
+        $orders = Order::orderBy('id','desc')->where('agent_id', Auth::guard('agent')->user()->id)->get();
+        return view('agent.order.index', compact('orders'));
+    }
+
 }
 
 
