@@ -26,4 +26,9 @@ class Property extends Model
         return $this->hasMany(PropertyPhoto::class);
     }
 
+    public function videos()
+    {
+        return $this->hasMany(PropertyVideo::class);
+    }
+
 }

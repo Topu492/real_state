@@ -12,6 +12,7 @@ use App\Models\Order;
 use App\Models\Package;
 use App\Models\Property;
 use App\Models\PropertyPhoto;
+use App\Models\PropertyVideo;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -427,12 +428,12 @@ class AgentController extends Controller
         if($property->featured_photo != '') {
             unlink(public_path('uploads/'.$property->featured_photo));
         }
-        // $photos = PropertyPhoto::where('property_id',$property->id)->get();
-        // foreach($photos as $photo){
-        //     if($photo->photo != '') {
-        //         unlink(public_path('uploads/'.$photo->photo));
-        //     }
-        // }
+        $photos = PropertyPhoto::where('property_id',$property->id)->get();
+        foreach($photos as $photo){
+            if($photo->photo != '') {
+                unlink(public_path('uploads/'.$photo->photo));
+            }
+        }
         $property->delete();
 
         return redirect()->back()->with('success', 'Property deleted successfully');
@@ -505,6 +506,66 @@ class AgentController extends Controller
         }
         $photo->delete();
         return redirect()->back()->with('success', 'Photo deleted successfully');
+    }
+
+     public function property_video_gallery($id)
+    {
+        $property = Property::where('id',$id)->where('agent_id', Auth::guard('agent')->user()->id)->first();
+        if(!$property){
+            return redirect()->back()->with('error', 'Property not found');
+        }
+
+        $videos = PropertyVideo::where('property_id',$property->id)->get();
+
+        return view('agent.property.video_gallery', compact('property', 'videos'));
+    }
+
+     public function property_video_gallery_store(Request $request, $id)
+    {
+        // Check in orders table if this agent has any package purchased
+        // $order = Order::where('agent_id', Auth::guard('agent')->user()->id)->where('currently_active',1)->first();
+        // if(!$order){
+        //     return redirect()->route('agent_payment')->with('error', 'You have not purchased any package yet. Please purchase a package to create properties.');
+        // }
+
+
+        // // Check if the agent has reached the maximum number of properties allowed in the package
+        // if($order->package->allowed_properties <= Property::where('agent_id', Auth::guard('agent')->user()->id)->count()){
+        //     return redirect()->route('agent_payment')->with('error', 'You have reached the maximum number of properties allowed in your package. Please purchase a new package to create more properties.');
+        // }
+
+
+        // Check if the agent has reached the maximum number of videos allowed in the package
+        // if($order->package->allowed_videos <= PropertyVideo::where('property_id',$id)->count()){
+        //     return redirect()->back()->with('error', 'You have reached the maximum number of videos allowed in your package. Please purchase a new package to add more videos.');
+        // }
+
+
+        $property = Property::where('id',$id)->where('agent_id', Auth::guard('agent')->user()->id)->first();
+        if(!$property){
+            return redirect()->back()->with('error', 'Property not found');
+        }
+
+        $request->validate([
+            'video' => ['required'],
+        ]);
+
+        $obj = new PropertyVideo();
+        $obj->property_id = $property->id;
+        $obj->video = $request->video;
+        $obj->save();
+
+        return redirect()->back()->with('success', 'Video added successfully');
+    }
+
+    public function property_video_gallery_delete($id)
+    {
+        $video = PropertyVideo::where('id',$id)->first();
+        if(!$video){
+            return redirect()->back()->with('error', 'Video not found');
+        }
+        $video->delete();
+        return redirect()->back()->with('success', 'Video deleted successfully');
     }
 
   

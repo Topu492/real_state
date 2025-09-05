@@ -65,7 +65,7 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('agent_property_photo_gallery',$property->id) }}" class="btn btn-primary btn-sm btn-sm-custom w-100-p mb_5">Photo Gallery</a>
-                                    <a href="" class="btn btn-primary btn-sm btn-sm-custom w-100-p mb_5">Video Gallery</a>
+                                    <a href="{{ route('agent_property_video_gallery',$property->id) }}" class="btn btn-primary btn-sm btn-sm-custom w-100-p mb_5">Video Gallery</a>
                                 </td>
                                 <td>
                                     <a href="{{ route('agent_property_edit', $property->id) }}" class="btn btn-warning btn-sm text-white"><i class="fas fa-edit"></i></a>
