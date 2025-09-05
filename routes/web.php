@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminCustomerController;
 use App\Http\Controllers\Admin\AdminLocationController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminPackageController;
+use App\Http\Controllers\Admin\AdminPropertyController;
 use App\Http\Controllers\Admin\AdminTypeController;
 use App\Http\Controllers\Agent\AgentController;
 use App\Http\Controllers\Front\FrontController;
@@ -137,9 +138,12 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/agent/delete/{id}', [AdminAgentController::class, 'delete'])->name('admin_agent_delete');
     Route::get('/order/index', [AdminOrderController::class, 'index'])->name('admin_order_index');
 
-  Route::get('/property/index', [AdminController::class, 'index'])->name('admin_property_index');
+   // Route::get('/property/index', [AdminController::class, 'index'])->name('admin_property_index');
 
-});
+     Route::get('/property/index', [AdminPropertyController::class, 'index'])->name('admin_property_index');
+     Route::get('/property/detail/{id}', [AdminPropertyController::class, 'detail'])->name('admin_property_detail');
+  
+    });
 
 Route::prefix('admin')->group(function () {
 

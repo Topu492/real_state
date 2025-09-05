@@ -21,13 +21,13 @@
                 </ul>
             </li>
 
-            <li class="nav-item dropdown">
+            <li lass="nav-item dropdown {{ Request::is('admin/location/*') || Request::is('admin/type/*') || Request::is('admin/amenity/*') || Request::is('admin/property/*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-folder"></i><span>Property Section</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('admin/location/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_location_index') }}"><i class="fas fa-angle-right"></i> Location</a></li>
                     <li class="{{ Request::is('admin/type/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_type_index') }}"><i class="fas fa-angle-right"></i> Type</a></li>
                     <li class="{{ Request::is('admin/amenity/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_amenity_index') }}"><i class="fas fa-angle-right"></i> Amenity</a></li>
-                    <li class=""><a class="nav-link" href=""><i class="fas fa-angle-right"></i> Property</a></li>
+                   <li class="{{ Request::is('admin/property/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_property_index') }}"><i class="fas fa-angle-right"></i> Property</a></li>
                 </ul>
             </li>
 
