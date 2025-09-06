@@ -95,7 +95,7 @@
                         <div class="wishlist"><a href=""><i class="far fa-heart"></i></a></div>
                     </div>
                     <div class="text">
-                        <h3><a href="">{{ $item->name }}</a></h3>
+                        <h3><a href="{{ route('property_detail',$item->slug) }}">{{ $item->name }}</a></h3>
                         <div class="detail">
                             <div class="stat">
                                 <div class="i1">{{ $item->size }} sqft</div>

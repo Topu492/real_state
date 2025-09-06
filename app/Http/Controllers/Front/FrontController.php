@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Websitemail;
 use App\Models\Package;
 use Illuminate\Http\Request;
 use App\Models\Property;
@@ -85,5 +86,26 @@ class FrontController extends Controller
         }
 
         return view('front.property_detail', compact('property'));
+    }
+
+      public function property_send_message(Request $request,$id)
+    {
+        $property = Property::where('id',$id)->first();
+        if (!$property) {
+            return redirect()->route('home')->with('error', 'Property not found');
+        }
+
+        // Send Email
+        $subject = 'Property Inquiry';
+        $message = 'You have received a new inquiry for the property: ' . $property->name.'<br><br>';
+        $message .= 'Visitor Name:<br>'.$request->name.'<br><br>';
+        $message .= 'Visitor Email:<br>'.$request->email.'<br><br>';
+        $message .= 'Visitor Phone:<br>'.$request->phone.'<br><br>';
+        $message .= 'Visitor Message:<br>'.nl2br($request->message);
+
+        $agent_email = $property->agent->email;
+        \Mail::to($agent_email)->send(new Websitemail($subject, $message));
+
+        return redirect()->back()->with('success', 'Message sent successfully to agent');
     }
 }

@@ -25,7 +25,7 @@ Route::get('/select-user', [FrontController::class, 'select_user'])->name('selec
 Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
 Route::get('/pricing', [FrontController::class, 'pricing'])->name('pricing');
 Route::get('/property/{slug}', [FrontController::class, 'property_detail'])->name('property_detail');
-
+Route::post('/property/message/{id}', [FrontController::class, 'property_send_message'])->name('property_send_message');
 // Agent Section
 Route::middleware('agent')->prefix('agent')->group(function () {
     Route::get('/dashboard', [AgentController::class, 'dashboard'])->name('agent_dashboard');
