@@ -50,7 +50,7 @@
                                                 @else
                                                 <span class="badge bg-success">{{ $item->status }}</span>
                                                 @endif
-                                                <div><a href="">Change</a></div>
+                                                <div><a href="{{ route('admin_property_change_status',$item->id) }}">Change</a></div>
                                             </td>
                                             <td>
                                                 <a href="{{ route('admin_property_detail',$item->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>

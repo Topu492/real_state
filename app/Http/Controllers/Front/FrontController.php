@@ -108,4 +108,44 @@ class FrontController extends Controller
 
         return redirect()->back()->with('success', 'Message sent successfully to agent');
     }
+
+    
+    public function locations()
+    {
+        // get the total propertywise locations. which location has more property, that will come first and in this way.
+        $locations = Location::withCount(['properties' => function ($query) {
+            $query->where('status', 'Active')
+            ->whereHas('agent', function($q) {
+                $q->whereHas('orders', function($qq) {
+                    $qq->where('currently_active', 1)
+                        ->where('status', 'Completed')
+                        ->where('expire_date', '>=', now());
+                });
+            });
+        }])->orderBy('properties_count', 'desc')->paginate(20);
+
+        return view('front.locations', compact('locations'));
+    }
+
+     public function location($slug) 
+    {
+        $location = Location::where('slug', $slug)->first();
+        if (!$location) {
+            return redirect()->route('front.locations')->with('error', 'Location not found');
+        }
+
+        $properties = Property::where('location_id', $location->id)
+            ->where('status', 'Active')
+            ->whereHas('agent', function($query) {
+                $query->whereHas('orders', function($q) {
+                    $q->where('currently_active', 1)
+                        ->where('status', 'Completed')
+                        ->where('expire_date', '>=', now());
+                });
+            })
+        ->orderBy('id', 'asc')
+        ->paginate(6);
+        
+        return view('front.location', compact('location', 'properties'));
+    }
 }
