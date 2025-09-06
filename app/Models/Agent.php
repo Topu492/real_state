@@ -11,8 +11,9 @@ class Agent extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    public function orders(){
-        $this->hasMany(Order::class);
+    public function orders()
+    {
+    return $this->hasMany(Order::class);
     }
 
       public function properties()

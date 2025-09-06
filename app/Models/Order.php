@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    public function agent(){
-        $this->belongsTo(Agent::class);
+   public function agent()
+    {
+        return $this->belongsTo(Agent::class);
     }
 
-    public function package(){
-        $this->belongsTo(Package::class);
+    public function package()
+    {
+        return $this->belongsTo(Package::class);
     }
 }

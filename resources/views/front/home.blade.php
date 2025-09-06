@@ -1,7 +1,7 @@
 @extends('front.layouts.master')
 
 @section('main_content')
-<div class="slider" style="background-image">
+<div class="slider" style="background-image:">
     <div class="bg"></div>
     <div class="container">
         <div class="row">
@@ -26,9 +26,9 @@
                                         <div class="form-group">
                                             <select name="location" class="form-select select2">
                                                 <option value="">Select Location</option>
-                                              
-                                                    <option value=""></option>
-                                               
+                                                @foreach($search_locations as $location)
+                                                    <option value="{{ $location->id }}">{{ $location->name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -36,9 +36,9 @@
                                         <div class="form-group">
                                             <select name="type" class="form-select select2">
                                                 <option value="">Select Type</option>
-                                              
-                                                    <option value=""></option>
-                                              
+                                                @foreach($search_types as $type)
+                                                    <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -70,69 +70,69 @@
             </div>
         </div>
         <div class="row">
-       
+            @foreach($properties as $item)
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="item">
                     <div class="photo">
-                        <img class="main" src="" alt="">
+                        <img class="main" src="{{ asset('uploads/'.$item->featured_photo) }}" alt="">
                         <div class="top">
-                           
+                            @if($item->purpose == 'Sale')
                             <div class="status-sale">
                                 For Sale
                             </div>
-                         
+                            @else
                             <div class="status-rent">
                                 For Rent
                             </div>
-                            
-                          
+                            @endif
+                            @if($item->is_featured == 'Yes')
                             <div class="featured">
                                 Featured
                             </div>
-                        
+                            @endif
                         </div>
-                        <div class="price">$</div>
+                        <div class="price">${{ $item->price }}</div>
                         <div class="wishlist"><a href=""><i class="far fa-heart"></i></a></div>
                     </div>
                     <div class="text">
-                        <h3><a href=""></a></h3>
+                        <h3><a href="">{{ $item->name }}</a></h3>
                         <div class="detail">
                             <div class="stat">
-                                <div class="i1">sqft</div>
-                                <div class="i2"> Bed</div>
-                                <div class="i3"> Bath</div>
+                                <div class="i1">{{ $item->size }} sqft</div>
+                                <div class="i2">{{ $item->bedroom }} Bed</div>
+                                <div class="i3">{{ $item->bathroom }} Bath</div>
                             </div>
                             <div class="address">
-                                <i class="fas fa-map-marker-alt"></i> 
+                                <i class="fas fa-map-marker-alt"></i> {{ $item->address }}
                             </div>
                             <div class="type-location">
                                 <div class="i1">
-                                    <i class="fas fa-edit"></i> 
+                                    <i class="fas fa-edit"></i> {{ $item->type->name }}
                                 </div>
                                 <div class="i2">
-                                    <i class="fas fa-location-arrow"></i>
+                                    <i class="fas fa-location-arrow"></i> {{ $item->location->name }}
                                 </div>
                             </div>
                             <div class="agent-section">
-                               
-                                <img class="agent-photo" src="" alt="">
-                            
-                                <img class="agent-photo" src="" alt="">
-                                
-                                <a href=""> </a>
+                                @if($item->agent->photo != null)
+                                <img class="agent-photo" src="{{ asset('uploads/'.$item->agent->photo) }}" alt="">
+                                @else
+                                <img class="agent-photo" src="{{ asset('uploads/default.png') }}" alt="">
+                                @endif
+                                <a href="">{{ $item->agent->name }} ({{ $item->agent->company }})</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-           
+            @endforeach
 
         </div>
     </div>
 </div>
 
 
-<div class="why-choose" style="background-image">
+<div class="why-choose" style="background-image:">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -202,19 +202,20 @@
             </div>
         </div>
         <div class="row">
-         
+            @foreach($agents as $item)
             <div class="col-lg-3 col-md-3">
                 <div class="item">
                     <div class="photo">
-                        <a href=""><img src="" alt=""></a>
+                        <a href=""><img src="{{ asset('uploads/'.$item->photo) }}" alt=""></a>
                     </div>
                     <div class="text">
                         <h2>
-                            <a href=""></a>
+                            <a href="">{{ $item->name }}</a>
                         </h2>
                     </div>
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
 </div>
@@ -234,26 +235,26 @@
             </div>
         </div>
         <div class="row">
-            
+            @foreach($locations as $item)
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="item">
                     <div class="photo">
-                        <a href=""><img src="" alt=""></a>
+                        <a href=""><img src="{{ asset('uploads/'.$item->photo) }}" alt=""></a>
                     </div>
                     <div class="text">
-                        <h2><a href=""></a></h2>
-                        <h4></h4>
+                        <h2><a href="">{{ $item->name }}</a></h2>
+                        <h4>({{ $item->properties_count }} Properties)</h4>
                     </div>
                 </div>
             </div>
-           
+            @endforeach
         </div>
     </div>
 </div>
 
 
 
-<div class="testimonial" style="background-image: url({{ asset('uploads/testimonial-bg.jpg') }})">
+{{-- <div class="testimonial" style="background-image:">
     <div class="bg"></div>
     <div class="container">
         <div class="row">
@@ -265,28 +266,28 @@
             <div class="col-12">
                 <div class="testimonial-carousel owl-carousel">
                     
-                  
+                    @foreach($testimonials as $item)
                     <div class="item">
                         <div class="photo">
-                            <img src="" alt="">
+                            <img src="{{ asset('uploads/'.$item->photo) }}" alt="">
                         </div>
                         <div class="text">
-                            <h4></h4>
-                            <p></p>
+                            <h4>{{ $item->name }}</h4>
+                            <p>{{ $item->designation }}</p>
                         </div>
                         <div class="description">
-                            
+                            {!! $item->comment !!}
                         </div>
                     </div>
-                   
+                    @endforeach
 
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
-<div class="blog">
+{{-- <div class="blog">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -299,29 +300,29 @@
             </div>
         </div>
         <div class="row">
-            
+            @foreach($posts as $item)
             <div class="col-lg-4 col-md-6">
                 <div class="item">
                     <div class="photo">
-                        <img src="" alt="">
+                        <img src="{{ asset('uploads/'.$item->photo) }}" alt="">
                     </div>
                     <div class="text">
                         <h2>
-                            <a href=""></a>
+                            <a href="{{ route('post',$item->slug) }}">{{ $item->title }}</a>
                         </h2>
                         <div class="short-des">
                             <p>
-                                
+                                {!! $item->short_description !!}
                             </p>
                         </div>
                         <div class="button">
-                            <a href="" class="btn btn-primary">Read More</a>
+                            <a href="{{ route('post',$item->slug) }}" class="btn btn-primary">Read More</a>
                         </div>
                     </div>
                 </div>
             </div>
-          
+            @endforeach
         </div>
     </div>
-</div>
+</div> --}}
 @endsection
