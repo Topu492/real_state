@@ -28,6 +28,10 @@ Route::get('/property/{slug}', [FrontController::class, 'property_detail'])->nam
 Route::post('/property/message/{id}', [FrontController::class, 'property_send_message'])->name('property_send_message');
 Route::get('/locations', [FrontController::class, 'locations'])->name('locations');
 Route::get('/location/{slug}', [FrontController::class, 'location'])->name('location');
+Route::get('/agents', [FrontController::class, 'agents'])->name('agents');
+Route::get('/agent/detail/{id}', [FrontController::class, 'agent'])->name('agent');
+Route::get('/property-search', [FrontController::class, 'property_search'])->name('property_search');
+
 
 
 // Agent Section
@@ -148,6 +152,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
      Route::get('/property/index', [AdminPropertyController::class, 'index'])->name('admin_property_index');
      Route::get('/property/detail/{id}', [AdminPropertyController::class, 'detail'])->name('admin_property_detail');
      Route::get('/property/change-status/{id}', [AdminPropertyController::class, 'change_status'])->name('admin_property_change_status');
+     Route::get('/property/delete/{id}', [AdminPropertyController::class, 'delete'])->name('admin_property_delete');
      Route::get('/property/delete/{id}', [AdminPropertyController::class, 'delete'])->name('admin_property_delete');
    
     });

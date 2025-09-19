@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Amenity;
 use App\Models\Amentity;
+use App\Models\Property;
 use Illuminate\Http\Request;
 
 class AdminAmenityController extends Controller
@@ -54,15 +55,15 @@ class AdminAmenityController extends Controller
 
     public function delete($id)
     {
-       // $properties = Property::get();
-       // foreach($properties as $item)
-       // {
-         //   $temp_arr = explode(',', $item->amenities);
-         //   if(in_array($id, $temp_arr))
-          //  {
-           //     return redirect()->route('admin_amenity_index')->with('error', 'Amenity cannot be deleted as it is associated with a property');
-           // }
-       // }
+       $properties = Property::get();
+       foreach($properties as $item)
+       {
+           $temp_arr = explode(',', $item->amenities);
+           if(in_array($id, $temp_arr))
+           {
+               return redirect()->route('admin_amenity_index')->with('error', 'Amenity cannot be deleted as it is associated with a property');
+           }
+       }
 
         $amenity = Amenity::where('id',$id)->first();
         $amenity->delete();

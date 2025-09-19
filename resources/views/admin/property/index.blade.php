@@ -55,7 +55,7 @@
                                             <td>
                                                 <a href="{{ route('admin_property_detail',$item->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
                                                 <a href="" class="btn btn-danger btn-sm" onClick="return confirm('Are you sure?');"><i class="fas fa-trash"></i></a>
-                                            </td>
+                                           </td>
                                         </tr>
                                         @endforeach
                                     </tbody>

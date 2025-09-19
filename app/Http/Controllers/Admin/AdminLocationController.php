@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Location;
+use App\Models\Property;
 use Illuminate\Http\Request;
 
 class AdminLocationController extends Controller
@@ -75,11 +76,11 @@ class AdminLocationController extends Controller
 
     public function delete($id)
     {
-        // If location has any property associated with it, you can not delete this location
-       // $property = Property::where('location_id',$id)->first();
-       // if($property) {
-          //  return redirect()->route('admin_location_index')->with('error', 'Location cannot be deleted as it is associated with a property');
-       // }
+       // If location has any property associated with it, you can not delete this location
+       $property = Property::where('location_id',$id)->first();
+       if($property) {
+           return redirect()->route('admin_location_index')->with('error', 'Location cannot be deleted as it is associated with a property');
+       }
 
         $location = Location::where('id',$id)->first();
         if($location->photo != '') {

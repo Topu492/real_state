@@ -119,7 +119,7 @@
                                 @else
                                 <img class="agent-photo" src="{{ asset('uploads/default.png') }}" alt="">
                                 @endif
-                                <a href="">{{ $item->agent->name }} ({{ $item->agent->company }})</a>
+                                <a href="{{ route('agent',$item->agent->id) }}">{{ $item->agent->name }} ({{ $item->agent->company }})</a>
                             </div>
                         </div>
                     </div>
@@ -210,7 +210,7 @@
                     </div>
                     <div class="text">
                         <h2>
-                            <a href="">{{ $item->name }}</a>
+                            <a href="{{ route('agent',$item->id) }}">{{ $item->name }}</a>
                         </h2>
                     </div>
                 </div>
