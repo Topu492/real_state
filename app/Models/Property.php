@@ -31,4 +31,9 @@ class Property extends Model
         return $this->hasMany(PropertyVideo::class);
     }
 
+     public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
 }

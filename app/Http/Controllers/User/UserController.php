@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Mail\Websitemail;
 use App\Models\User;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -14,11 +15,11 @@ class UserController extends Controller
      public function dashboard()
     {
         
-        return view('user.dashboard');
+        return view('user.dashboard.index');
     }
     public function registration()
     {
-        return view('user.registration');
+        return view('user.auth.registration');
     }
 
     public function registration_submit(Request $request)
@@ -62,7 +63,7 @@ class UserController extends Controller
 
     public function login()
     {
-        return view('user.login');
+        return view('user.auth.login');
     }
 
 
@@ -95,7 +96,7 @@ class UserController extends Controller
 
     public function forget_password()
     {
-        return view('user.forget_password');
+        return view('user.auth.forget_password');
     }
 
     public function forget_password_submit(Request $request)
@@ -130,7 +131,7 @@ class UserController extends Controller
         if(!$user){
             return redirect()->route('login')->with('error', 'Invalid token or email');
         }
-        return view('user.reset_password', compact('token', 'email'));
+        return view('user.auth.reset_password', compact('token', 'email'));
     }
 
     public function reset_password_submit(Request $request, $token, $email)
@@ -150,7 +151,7 @@ class UserController extends Controller
 
     public function profile()
     {
-        return view('user.profile');
+        return view('user.profile.index');
     }
 
     public function profile_submit(Request $request)
@@ -188,5 +189,12 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'Profile updated successfully');
     }
+
+      public function wishlist()
+    {
+        $wishlists = Wishlist::where('user_id', Auth::guard('web')->user()->id)->get();
+        return view('user.wishlist.index', compact('wishlists'));
+    }
+
 
 }

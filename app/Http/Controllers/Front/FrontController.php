@@ -13,6 +13,8 @@ use App\Models\Agent;
 use App\Models\Amenity;
 use App\Models\Location;
 use App\Models\Type;
+use App\Models\Wishlist;
+use Illuminate\Support\Facades\Auth;
 
 class FrontController extends Controller
   {     
@@ -245,5 +247,28 @@ class FrontController extends Controller
         $amenities = Amenity::orderBy('name', 'asc')->get();
 
         return view('front.property_search', compact('locations', 'types', 'amenities', 'properties', 'form_name', 'form_location', 'form_type', 'form_purpose', 'form_bedroom', 'form_bathroom', 'form_min_price', 'form_max_price', 'form_amenity'));
+    }
+
+
+     public function wishlist_add($id)
+    {
+        if(!Auth::guard('web')->check()) {
+            return redirect()->route('login')->with('error', 'Please login to add property to wishlist');
+        }
+
+        // Check if the property is already in the wishlist
+        $existingWishlist = Wishlist::where('user_id', Auth::guard('web')->user()->id)
+            ->where('property_id', $id)
+            ->first();
+        if($existingWishlist) {
+            return redirect()->back()->with('error', 'Property already in wishlist');
+        }
+
+        $obj = new Wishlist();
+        $obj->user_id = Auth::guard('web')->user()->id;
+        $obj->property_id = $id;
+        $obj->save();
+
+        return redirect()->back()->with('success', 'Property added to wishlist');
     }
 }

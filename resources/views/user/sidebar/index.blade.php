@@ -6,7 +6,7 @@
         <a href="">Message</a>
     </li>
     <li class="list-group-item {{ Request::is('wishlist') ? 'active' : '' }}">
-        <a href="">Wishlist</a>
+        <a href="{{ route('wishlist') }}">Wishlist</a>
     </li>
     <li class="list-group-item {{ Request::is('profile') ? 'active' : '' }}">
         <a href="{{ route('profile') }}">Edit Profile</a>

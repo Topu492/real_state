@@ -31,7 +31,7 @@ Route::get('/location/{slug}', [FrontController::class, 'location'])->name('loca
 Route::get('/agents', [FrontController::class, 'agents'])->name('agents');
 Route::get('/agent/detail/{id}', [FrontController::class, 'agent'])->name('agent');
 Route::get('/property-search', [FrontController::class, 'property_search'])->name('property_search');
-
+Route::get('/wishlist-add/{id}', [FrontController::class, 'wishlist_add'])->name('wishlist_add');
 
 
 // Agent Section
@@ -83,6 +83,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::post('/profile', [UserController::class, 'profile_submit'])->name('profile_submit');
+    Route::get('/wishlist', [UserController::class, 'wishlist'])->name('wishlist');
+
 });
 
 Route::get('/registration', [UserController::class, 'registration'])->name('registration');
