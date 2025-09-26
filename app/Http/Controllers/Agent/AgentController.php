@@ -8,12 +8,15 @@ use App\Models\Admin;
 use App\Models\Agent;
 use App\Models\Amenity;
 use App\Models\Location;
+use App\Models\Message;
+use App\Models\MessageReply;
 use App\Models\Order;
 use App\Models\Package;
 use App\Models\Property;
 use App\Models\PropertyPhoto;
 use App\Models\PropertyVideo;
 use App\Models\Type;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -569,7 +572,45 @@ class AgentController extends Controller
     }
 
   
+public function message()
+    {
+        $messages = Message::where('agent_id', Auth::guard('agent')->user()->id)->get();
+        return view('agent.message.index', compact('messages'));
+    }
 
+    public function message_reply($id)
+    {
+        $message = Message::where('id', $id)->first();
+        $replies = MessageReply::where('message_id', $id)->get();
+        return view('agent.message.reply', compact('message', 'replies'));
+    }
+
+    public function message_reply_submit(Request $request, $m_id, $c_id)
+    {
+        $request->validate([
+            'reply' => 'required',
+        ]);
+
+        $reply = new MessageReply();
+        $reply->message_id = $m_id;
+        $reply->user_id = $c_id;
+        $reply->agent_id = Auth::guard('agent')->user()->id;
+        $reply->sender = 'Agent';
+        $reply->reply = $request->reply;
+        $reply->save();
+
+        // Send email to agent
+        $subject = 'New Reply from Agent';
+        $message = 'You have received a new reply from agent. Please click on the following link:<br>';
+        $link = url('message/reply/'.$m_id);
+        $message .= '<a href="'.$link.'">'.$link.'</a>';
+
+        $user = User::where('id', $c_id)->first();
+        
+        \Mail::to($user->email)->send(new Websitemail($subject, $message));
+
+        return redirect()->back()->with('success', 'Reply sent successfully');
+    }
  
  
 

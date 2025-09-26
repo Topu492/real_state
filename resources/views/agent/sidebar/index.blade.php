@@ -15,7 +15,7 @@
         <a href="{{ route('agent_property_index') }}">All Properties</a>
     </li>
     <li class="list-group-item {{ Request::is('agent/message/*') ? 'active' : '' }}">
-        <a href="">Message</a>
+        <a href="{{ route('agent_message') }}">Message</a>
     </li>
     <li class="list-group-item {{ Request::is('agent/profile') ? 'active' : '' }}">
         <a href="{{ route('agent_profile') }}">Edit Profile</a>

@@ -75,6 +75,12 @@ Route::prefix('agent')->group(function () {
     Route::get('/reset-password/{token}/{email}', [AgentController::class, 'reset_password'])->name('agent_reset_password');
     Route::post('/reset-password/{token}/{email}', [AgentController::class, 'reset_password_submit'])->name('agent_reset_password_submit');
     Route::get('/logout', [AgentController::class, 'logout'])->name('agent_logout');
+
+    Route::get('/message/index', [AgentController::class, 'message'])->name('agent_message');
+    Route::get('/message/reply/{id}', [AgentController::class, 'message_reply'])->name('agent_message_reply');
+    Route::post('/message/reply-submit/{message_id}/{agent_id}', [AgentController::class, 'message_reply_submit'])->name('agent_message_reply_submit');
+
+
 });
 
 // user
