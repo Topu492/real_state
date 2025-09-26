@@ -3,7 +3,7 @@
         <a href="{{ route('dashboard') }}">Dashboard</a>
     </li>
     <li class="list-group-item {{ Request::is('message/*') ? 'active' : '' }}">
-        <a href="">Message</a>
+        <a href="{{ route('message') }}">Message</a>
     </li>
     <li class="list-group-item {{ Request::is('wishlist') ? 'active' : '' }}">
         <a href="{{ route('wishlist') }}">Wishlist</a>

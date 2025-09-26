@@ -84,8 +84,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::post('/profile', [UserController::class, 'profile_submit'])->name('profile_submit');
     Route::get('/wishlist', [UserController::class, 'wishlist'])->name('wishlist');
+    Route::get('/message/index', [UserController::class, 'message'])->name('message');
+    Route::get('/message/create', [UserController::class, 'message_create'])->name('message_create');
+    Route::post('/message/store', [UserController::class, 'message_store'])->name('message_store');
+     Route::get('/message/reply/{id}', [UserController::class, 'message_reply'])->name('message_reply');
+    Route::post('/message/reply-submit/{message_id}/{agent_id}', [UserController::class, 'message_reply_submit'])->name('message_reply_submit');
+    Route::get('/message/delete/{id}', [UserController::class, 'message_delete'])->name('message_delete');
 
-});
+ });
 
 Route::get('/registration', [UserController::class, 'registration'])->name('registration');
 Route::post('/registration', [UserController::class, 'registration_submit'])->name('registration_submit');

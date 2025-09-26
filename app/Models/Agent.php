@@ -20,4 +20,14 @@ class Agent extends Authenticatable
     {
         return $this->hasMany(Property::class);
     }
+
+     public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+    
+    public function messageReplies()
+    {
+        return $this->hasMany(MessageReply::class);
+    }
 }

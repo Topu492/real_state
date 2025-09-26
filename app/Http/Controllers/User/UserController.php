@@ -4,6 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Mail\Websitemail;
+use App\Models\Agent;
+use App\Models\Message;
+use App\Models\MessageReply;
 use App\Models\User;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
@@ -194,6 +197,86 @@ class UserController extends Controller
     {
         $wishlists = Wishlist::where('user_id', Auth::guard('web')->user()->id)->get();
         return view('user.wishlist.index', compact('wishlists'));
+    }
+
+     public function message()
+    {
+        $messages = Message::where('user_id', Auth::guard('web')->user()->id)->get();
+        return view('user.message.index', compact('messages'));
+    }
+
+    public function message_create()
+    {
+        $agents = Agent::where('status', 1)->get();
+        return view('user.message.create', compact('agents'));
+    }
+
+    public function message_store(Request $request)
+    {
+        $request->validate([
+            'subject' => 'required',
+            'message' => 'required',
+            'agent_id' => 'required',
+        ]);
+
+        $message = new Message();
+        $message->user_id = Auth::guard('web')->user()->id;
+        $message->agent_id = $request->agent_id;
+        $message->subject = $request->subject;
+        $message->message = $request->message;
+        $message->save();
+
+        // Send email to agent
+        $subject = 'New Message from Customer';
+        $message = 'You have received a new message from customer. Please click on the following link:<br>';
+        $link = url('agent/message/index');
+        $message .= '<a href="'.$link.'">'.$link.'</a>';
+
+        $agent = Agent::where('id', $request->agent_id)->first();
+        
+        \Mail::to($agent->email)->send(new Websitemail($subject, $message));
+
+        return redirect()->route('message')->with('success', 'Message is created successfully');
+    }
+
+     public function message_reply($id)
+    {
+        $message = Message::where('id', $id)->first();
+        $replies = MessageReply::where('message_id', $id)->get();
+        return view('user.message.reply', compact('message', 'replies'));
+    }
+
+    public function message_reply_submit(Request $request, $m_id, $a_id)
+    {
+        $request->validate([
+            'reply' => 'required',
+        ]);
+
+        $reply = new MessageReply();
+        $reply->message_id = $m_id;
+        $reply->user_id = Auth::guard('web')->user()->id;
+        $reply->agent_id = $a_id;
+        $reply->sender = 'Customer';
+        $reply->reply = $request->reply;
+        $reply->save();
+
+        // Send email to agent
+        $subject = 'New Reply from Customer';
+        $message = 'You have received a new reply from customer. Please click on the following link:<br>';
+        $link = url('agent/message/reply/'.$m_id);
+        $message .= '<a href="'.$link.'">'.$link.'</a>';
+
+        $agent = Agent::where('id', $a_id)->first();
+        
+        \Mail::to($agent->email)->send(new Websitemail($subject, $message));
+
+        return redirect()->back()->with('success', 'Reply sent successfully');
+    }
+
+    public function message_delete($id)
+    {
+        Message::where('id', $id)->delete();
+        return redirect()->back()->with('success', 'Message deleted successfully');
     }
 
 
