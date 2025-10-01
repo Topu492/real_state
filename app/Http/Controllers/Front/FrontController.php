@@ -12,6 +12,8 @@ use App\Models\PropertyVideo;
 use App\Models\Agent;
 use App\Models\Amenity;
 use App\Models\Location;
+use App\Models\Post;
+use App\Models\Testimonial;
 use App\Models\Type;
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\Auth;
@@ -61,9 +63,11 @@ class FrontController extends Controller
         $search_locations = Location::orderBy('name', 'asc')->get();
         $search_types = Type::orderBy('name', 'asc')->get();
         $agents = Agent::where('status', 1)->orderBy('id', 'asc')->take(4)->get();
-       
+        $testimonials = Testimonial::orderBy('id','asc')->get();
+        $posts = Post::orderBy('id','desc')->take(3)->get();
+
         
-        return view('front.home', compact('properties', 'locations', 'agents', 'search_locations', 'search_types'));
+        return view('front.home', compact('properties', 'locations', 'agents', 'search_locations', 'search_types','testimonials','posts'));
    }
 
     public function contact()
@@ -270,5 +274,25 @@ class FrontController extends Controller
         $obj->save();
 
         return redirect()->back()->with('success', 'Property added to wishlist');
+    }
+
+     public function blog()
+    {
+        $posts = Post::orderBy('id','desc')->paginate(15);
+        return view('front.blog', compact('posts'));
+    }
+
+      public function post($slug)
+    {
+        $post = Post::where('slug', $slug)->first();
+        if (!$post) {
+            return redirect()->route('blog')->with('error', 'Post not found');
+        }
+
+        $new_view = $post->total_views + 1;
+        $post->total_views = $new_view;
+        $post->save();
+
+        return view('front.post', compact('post'));
     }
 }

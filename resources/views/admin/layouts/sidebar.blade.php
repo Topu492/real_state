@@ -39,7 +39,8 @@
 
             <li class="{{ Request::is('admin/agent/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_agent_index') }}"><i class="far fa-file"></i> <span>Agent</span></a></li>
 
-            <li class=""><a class="nav-link" href=""><i class="far fa-file"></i> <span>Testimonial</span></a></li>
+            <li class="{{ Request::is('admin/testimonial/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_testimonial_index') }}"><i class="far fa-file"></i> <span>Testimonial</span></a></li>
+             <li class="{{ Request::is('admin/post/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_post_index') }}"><i class="far fa-file"></i> <span>Post</span></a></li>
 
             <li class=""><a class="nav-link" href=""><i class="far fa-file"></i> <span>Blog Post</span></a></li>
 

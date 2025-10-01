@@ -7,7 +7,9 @@ use App\Http\Controllers\Admin\AdminCustomerController;
 use App\Http\Controllers\Admin\AdminLocationController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminPackageController;
+use App\Http\Controllers\Admin\AdminPostController;
 use App\Http\Controllers\Admin\AdminPropertyController;
+use App\Http\Controllers\Admin\AdminTestimonialController;
 use App\Http\Controllers\Admin\AdminTypeController;
 use App\Http\Controllers\Agent\AgentController;
 use App\Http\Controllers\Front\FrontController;
@@ -32,7 +34,8 @@ Route::get('/agents', [FrontController::class, 'agents'])->name('agents');
 Route::get('/agent/detail/{id}', [FrontController::class, 'agent'])->name('agent');
 Route::get('/property-search', [FrontController::class, 'property_search'])->name('property_search');
 Route::get('/wishlist-add/{id}', [FrontController::class, 'wishlist_add'])->name('wishlist_add');
-
+Route::get('/blog', [FrontController::class, 'blog'])->name('blog');
+Route::get('/post/{slug}', [FrontController::class, 'post'])->name('post');
 
 // Agent Section
 Route::middleware('agent')->prefix('agent')->group(function () {
@@ -169,7 +172,22 @@ Route::middleware('admin')->prefix('admin')->group(function () {
      Route::get('/property/delete/{id}', [AdminPropertyController::class, 'delete'])->name('admin_property_delete');
      Route::get('/property/delete/{id}', [AdminPropertyController::class, 'delete'])->name('admin_property_delete');
    
-    });
+    Route::get('/testimonial/index', [AdminTestimonialController::class, 'index'])->name('admin_testimonial_index');
+    Route::get('/testimonial/create', [AdminTestimonialController::class, 'create'])->name('admin_testimonial_create');
+    Route::post('/testimonial/store', [AdminTestimonialController::class, 'store'])->name('admin_testimonial_store');
+    Route::get('/testimonial/edit/{id}', [AdminTestimonialController::class, 'edit'])->name('admin_testimonial_edit');
+    Route::post('/testimonial/update/{id}', [AdminTestimonialController::class, 'update'])->name('admin_testimonial_update');
+    Route::get('/testimonial/delete/{id}', [AdminTestimonialController::class, 'delete'])->name('admin_testimonial_delete');
+    
+        Route::get('/post/index', [AdminPostController::class, 'index'])->name('admin_post_index');
+    Route::get('/post/create', [AdminPostController::class, 'create'])->name('admin_post_create');
+    Route::post('/post/store', [AdminPostController::class, 'store'])->name('admin_post_store');
+    Route::get('/post/edit/{id}', [AdminPostController::class, 'edit'])->name('admin_post_edit');
+    Route::post('/post/update/{id}', [AdminPostController::class, 'update'])->name('admin_post_update');
+    Route::get('/post/delete/{id}', [AdminPostController::class, 'delete'])->name('admin_post_delete');
+
+
+});
 
 Route::prefix('admin')->group(function () {
 

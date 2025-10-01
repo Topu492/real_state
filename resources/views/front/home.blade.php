@@ -14,7 +14,7 @@
                         </p>
                     </div>
                     <div class="search-section">
-                        <form action="" method="get">
+                        <form action="{{ route('property_search') }}" method="get">
                             <div class="inner">
                                 <div class="row">
                                     <div class="col-lg-3">
@@ -132,7 +132,7 @@
 </div>
 
 
-<div class="why-choose" style="background-image:">
+<div class="why-choose" style="background-image: url({{ asset('uploads/why-choose.jpg') }})">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -206,7 +206,7 @@
             <div class="col-lg-3 col-md-3">
                 <div class="item">
                     <div class="photo">
-                        <a href=""><img src="{{ asset('uploads/'.$item->photo) }}" alt=""></a>
+                        <a href="{{ route('agent',$item->id) }}"><img src="{{ asset('uploads/'.$item->photo) }}" alt=""></a>
                     </div>
                     <div class="text">
                         <h2>
@@ -239,10 +239,10 @@
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="item">
                     <div class="photo">
-                        <a href=""><img src="{{ asset('uploads/'.$item->photo) }}" alt=""></a>
+                        <a href="{{ route('location',$item->slug) }}"><img src="{{ asset('uploads/'.$item->photo) }}" alt=""></a>
                     </div>
                     <div class="text">
-                        <h2><a href="">{{ $item->name }}</a></h2>
+                        <h2><a href="{{ route('location',$item->slug) }}">{{ $item->name }}</a></h2>
                         <h4>({{ $item->properties_count }} Properties)</h4>
                     </div>
                 </div>
@@ -254,7 +254,7 @@
 
 
 
-{{-- <div class="testimonial" style="background-image:">
+<div class="testimonial" style="background-image: url({{ asset('uploads/testimonial-bg.jpg') }})">
     <div class="bg"></div>
     <div class="container">
         <div class="row">
@@ -285,9 +285,9 @@
             </div>
         </div>
     </div>
-</div> --}}
+</div>
 
-{{-- <div class="blog">
+<div class="blog">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -324,5 +324,5 @@
             @endforeach
         </div>
     </div>
-</div> --}}
+</div>
 @endsection
