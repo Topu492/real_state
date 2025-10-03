@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminAgentController;
 use App\Http\Controllers\Admin\AdminAmenityController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminCustomerController;
+use App\Http\Controllers\Admin\AdminFaqController;
 use App\Http\Controllers\Admin\AdminLocationController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminPackageController;
@@ -36,6 +37,8 @@ Route::get('/property-search', [FrontController::class, 'property_search'])->nam
 Route::get('/wishlist-add/{id}', [FrontController::class, 'wishlist_add'])->name('wishlist_add');
 Route::get('/blog', [FrontController::class, 'blog'])->name('blog');
 Route::get('/post/{slug}', [FrontController::class, 'post'])->name('post');
+Route::get('/faq', [FrontController::class, 'faq'])->name('faq');
+
 
 // Agent Section
 Route::middleware('agent')->prefix('agent')->group(function () {
@@ -179,12 +182,20 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::post('/testimonial/update/{id}', [AdminTestimonialController::class, 'update'])->name('admin_testimonial_update');
     Route::get('/testimonial/delete/{id}', [AdminTestimonialController::class, 'delete'])->name('admin_testimonial_delete');
     
-        Route::get('/post/index', [AdminPostController::class, 'index'])->name('admin_post_index');
+    Route::get('/post/index', [AdminPostController::class, 'index'])->name('admin_post_index');
     Route::get('/post/create', [AdminPostController::class, 'create'])->name('admin_post_create');
     Route::post('/post/store', [AdminPostController::class, 'store'])->name('admin_post_store');
     Route::get('/post/edit/{id}', [AdminPostController::class, 'edit'])->name('admin_post_edit');
     Route::post('/post/update/{id}', [AdminPostController::class, 'update'])->name('admin_post_update');
     Route::get('/post/delete/{id}', [AdminPostController::class, 'delete'])->name('admin_post_delete');
+
+    
+    Route::get('/faq/index', [AdminFaqController::class, 'index'])->name('admin_faq_index');
+    Route::get('/faq/create', [AdminFaqController::class, 'create'])->name('admin_faq_create');
+    Route::post('/faq/store', [AdminFaqController::class, 'store'])->name('admin_faq_store');
+    Route::get('/faq/edit/{id}', [AdminFaqController::class, 'edit'])->name('admin_faq_edit');
+    Route::post('/faq/update/{id}', [AdminFaqController::class, 'update'])->name('admin_faq_update');
+    Route::get('/faq/delete/{id}', [AdminFaqController::class, 'delete'])->name('admin_faq_delete');
 
 
 });

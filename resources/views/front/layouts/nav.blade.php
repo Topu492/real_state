@@ -31,7 +31,7 @@
                             <a href="{{ route('pricing') }}" class="nav-link">Pricing</a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">FAQ</a>
+                            <a href="{{ route('faq') }}" class="nav-link">FAQ</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('blog') }}" class="nav-link">Blog</a>

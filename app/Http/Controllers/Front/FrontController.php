@@ -11,6 +11,7 @@ use App\Models\PropertyPhoto;
 use App\Models\PropertyVideo;
 use App\Models\Agent;
 use App\Models\Amenity;
+use App\Models\Faq;
 use App\Models\Location;
 use App\Models\Post;
 use App\Models\Testimonial;
@@ -281,6 +282,13 @@ class FrontController extends Controller
         $posts = Post::orderBy('id','desc')->paginate(15);
         return view('front.blog', compact('posts'));
     }
+
+     public function faq()
+    {
+        $faqs = Faq::orderBy('id','asc')->get();
+        return view('front.faq', compact('faqs'));
+    }
+
 
       public function post($slug)
     {
