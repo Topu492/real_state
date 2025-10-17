@@ -13,6 +13,7 @@ use App\Models\Agent;
 use App\Models\Amenity;
 use App\Models\Faq;
 use App\Models\Location;
+use App\Models\Page;
 use App\Models\Post;
 use App\Models\Subscriber;
 use App\Models\Testimonial;
@@ -75,6 +76,31 @@ class FrontController extends Controller
     public function contact()
     {
         return view('front.contact');
+    }
+
+     public function contact_submit(Request $request)
+    {
+        $validator = \Validator::make($request->all(),[
+            'name' => ['required'],
+            'email' => ['required','email','unique:subscribers,email'],
+            'message' => ['required'],
+        ]);
+
+        if(!$validator->passes()) {
+            return response()->json(['code'=>0,'error_message'=>$validator->errors()->toArray()]);
+        } else {
+            
+            // Send email
+            $subject = 'Contact Form Message';
+            $message = 'Sender Information:<br>';
+            $message .= '<b>Name:</b><br>'.$request->name.'<br><br>';
+            $message .= '<b>Email:</b><br>'.$request->email.'<br><br>';
+            $message .= '<b>Message:</b><br>'.nl2br($request->message);
+
+            \Mail::to($request->email)->send(new Websitemail($subject,$message));
+
+            return response()->json(['code'=>1,'success_message'=>'Message is sent successfully']);
+        }
     }
 
     public function select_user()
@@ -354,5 +380,18 @@ class FrontController extends Controller
             return redirect()->route('home');
         }
 
+    }
+
+
+       public function terms()
+    {
+        $terms_data = Page::where('id',1)->first();
+        return view('front.terms', compact('terms_data'));
+    }
+
+    public function privacy()
+    {
+        $privacy_data = Page::where('id',1)->first();
+        return view('front.privacy', compact('privacy_data'));
     }
 }

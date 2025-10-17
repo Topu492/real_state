@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminFaqController;
 use App\Http\Controllers\Admin\AdminLocationController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminPackageController;
+use App\Http\Controllers\Admin\AdminPageController;
 use App\Http\Controllers\Admin\AdminPostController;
 use App\Http\Controllers\Admin\AdminPropertyController;
 use App\Http\Controllers\Admin\AdminSubscriberController;
@@ -25,6 +26,8 @@ use Illuminate\Support\Facades\Route;
 // front
 
 Route::get('/', [FrontController::class, 'index'])->name('home');
+Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
+Route::post('/contact-submit', [FrontController::class, 'contact_submit'])->name('contact_submit');
 Route::get('/select-user', [FrontController::class, 'select_user'])->name('select_user');
 Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
 Route::get('/pricing', [FrontController::class, 'pricing'])->name('pricing');
@@ -39,6 +42,8 @@ Route::get('/wishlist-add/{id}', [FrontController::class, 'wishlist_add'])->name
 Route::get('/blog', [FrontController::class, 'blog'])->name('blog');
 Route::get('/post/{slug}', [FrontController::class, 'post'])->name('post');
 Route::get('/faq', [FrontController::class, 'faq'])->name('faq');
+Route::get('/terms', [FrontController::class, 'terms'])->name('terms');
+Route::get('/privacy', [FrontController::class, 'privacy'])->name('privacy');
 
 Route::post('/subscriber/send-email', [FrontController::class, 'subscriber_send_email'])->name('subscriber_send_email');
 Route::get('/subscriber/verify/{email}/{token}', [FrontController::class, 'subscriber_verify'])->name('subscriber_verify');
@@ -209,6 +214,9 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::post('/subscriber/update/{id}', [AdminSubscriberController::class, 'update'])->name('admin_subscriber_update');
     Route::get('/subscriber/delete/{id}', [AdminSubscriberController::class, 'delete'])->name('admin_subscriber_delete');
     Route::get('/subscriber/export', [AdminSubscriberController::class, 'export'])->name('admin_subscriber_export');
+
+    Route::get('/page/index', [AdminPageController::class, 'index'])->name('admin_page_index');
+    Route::post('/page/update', [AdminPageController::class, 'update'])->name('admin_page_update');
 
 
 });

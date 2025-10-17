@@ -1,7 +1,7 @@
 @extends('front.layouts.master')
 
 @section('main_content')
-<div class="page-top" style="background-image">
+<div class="page-top" style="background-image:">
     <div class="bg"></div>
     <div class="container">
         <div class="row">
@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-lg-6 col-md-12">
                 <div class="contact-form">
-                    <form action="" method="post" class="form_contact">
+                    <form action="{{ route('contact_submit') }}" method="post" class="form_contact">
                         @csrf
                         <div class="mb-3">
                             <label for="" class="form-label">Name</label>
@@ -52,7 +52,45 @@
 </div>
 
 <script>
-   
+    (function($){
+        $(".form_contact").on('submit', function(e){
+            e.preventDefault();
+            $('#loader').show();
+            var form = this;
+            $.ajax({
+                url:$(form).attr('action'),
+                method:$(form).attr('method'),
+                data:new FormData(form),
+                processData:false,
+                dataType:'json',
+                contentType:false,
+                beforeSend:function(){
+                    $(form).find('span.error-text').text('');
+                },
+                success:function(data)
+                {
+                    $('#loader').hide();
+                    if(data.code == 0)
+                    {
+                        $.each(data.error_message, function(prefix, val) {
+                            $(form).find('span.'+prefix+'_error').text(val[0]);
+                        });
+                    }
+                    else if(data.code == 1)
+                    {
+                        $(form)[0].reset();
+                        iziToast.success({
+                            message: data.success_message,
+                            position: 'topRight',
+                            timeout: 5000,
+                            progressBarColor: '#00FF00',
+                        });
+                    }
+                    
+                }
+            });
+        });
+    })(jQuery);
 </script>
 <div id="loader"></div>
 @endsection
