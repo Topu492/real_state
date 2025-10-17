@@ -14,6 +14,7 @@ use App\Models\Amenity;
 use App\Models\Faq;
 use App\Models\Location;
 use App\Models\Post;
+use App\Models\Subscriber;
 use App\Models\Testimonial;
 use App\Models\Type;
 use App\Models\Wishlist;
@@ -302,5 +303,56 @@ class FrontController extends Controller
         $post->save();
 
         return view('front.post', compact('post'));
+    }
+
+     public function subscriber_send_email(Request $request)
+    {
+        $validator = \Validator::make($request->all(),[
+            'email' => ['required','email','unique:subscribers,email'],
+        ]);
+
+        if(!$validator->passes()) {
+            return response()->json(['code'=>0,'error_message'=>$validator->errors()->toArray()]);
+        } else {
+
+            $token = hash('sha256', time());
+
+            $obj = new Subscriber();
+            $obj->email = $request->email;
+            $obj->token = $token;
+            $obj->status = 0;
+            $obj->save();
+
+            $verification_link = url('subscriber/verify/'.$request->email.'/'.$token);
+            
+            // Send email
+            $subject = 'Subscriber Verification';
+            $message = 'Please click on the link below to confirm subscription:<br>';
+            $message .= '<a href="'.$verification_link.'">';
+            $message .= $verification_link;
+            $message .= '</a>';
+
+            \Mail::to($request->email)->send(new Websitemail($subject,$message));
+
+            return response()->json(['code'=>1,'success_message'=>'Please check your email to confirm subscription']);
+        }
+    }
+
+     public function subscriber_verify($email,$token)
+    {
+        $subscriber_data = Subscriber::where('email',$email)->where('token',$token)->first();
+
+        if($subscriber_data) {
+            
+            $subscriber_data->token = '';
+            $subscriber_data->status = 1;
+            $subscriber_data->update();
+
+            return redirect()->route('home')->with('success', 'Your subscription is verified successfully!');
+
+        } else {
+            return redirect()->route('home');
+        }
+
     }
 }

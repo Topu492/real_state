@@ -48,7 +48,7 @@
 
             <li class=""><a class="nav-link" href=""><i class="far fa-file"></i> <span>Page Section</span></a></li>
 
-            <li class=""><a class="nav-link" href=""><i class="far fa-file"></i> <span>Subscriber</span></a></li>
+            <li class="{{ Request::is('admin/subscriber/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_subscriber_index') }}"><i class="far fa-file"></i> <span>Subscriber</span></a></li>
 
             <li class="{{ Request::is('admin/profile') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_profile') }}"><i class="far fa-file"></i> <span>Edit Profile</span></a></li>
 

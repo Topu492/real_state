@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminPackageController;
 use App\Http\Controllers\Admin\AdminPostController;
 use App\Http\Controllers\Admin\AdminPropertyController;
+use App\Http\Controllers\Admin\AdminSubscriberController;
 use App\Http\Controllers\Admin\AdminTestimonialController;
 use App\Http\Controllers\Admin\AdminTypeController;
 use App\Http\Controllers\Agent\AgentController;
@@ -38,6 +39,10 @@ Route::get('/wishlist-add/{id}', [FrontController::class, 'wishlist_add'])->name
 Route::get('/blog', [FrontController::class, 'blog'])->name('blog');
 Route::get('/post/{slug}', [FrontController::class, 'post'])->name('post');
 Route::get('/faq', [FrontController::class, 'faq'])->name('faq');
+
+Route::post('/subscriber/send-email', [FrontController::class, 'subscriber_send_email'])->name('subscriber_send_email');
+Route::get('/subscriber/verify/{email}/{token}', [FrontController::class, 'subscriber_verify'])->name('subscriber_verify');
+
 
 
 // Agent Section
@@ -196,6 +201,14 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/faq/edit/{id}', [AdminFaqController::class, 'edit'])->name('admin_faq_edit');
     Route::post('/faq/update/{id}', [AdminFaqController::class, 'update'])->name('admin_faq_update');
     Route::get('/faq/delete/{id}', [AdminFaqController::class, 'delete'])->name('admin_faq_delete');
+
+    Route::get('/subscriber/index', [AdminSubscriberController::class, 'index'])->name('admin_subscriber_index');
+    Route::get('/subscriber/create', [AdminSubscriberController::class, 'create'])->name('admin_subscriber_create');
+    Route::post('/subscriber/store', [AdminSubscriberController::class, 'store'])->name('admin_subscriber_store');
+    Route::get('/subscriber/edit/{id}', [AdminSubscriberController::class, 'edit'])->name('admin_subscriber_edit');
+    Route::post('/subscriber/update/{id}', [AdminSubscriberController::class, 'update'])->name('admin_subscriber_update');
+    Route::get('/subscriber/delete/{id}', [AdminSubscriberController::class, 'delete'])->name('admin_subscriber_delete');
+    Route::get('/subscriber/export', [AdminSubscriberController::class, 'export'])->name('admin_subscriber_export');
 
 
 });

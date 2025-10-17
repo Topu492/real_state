@@ -1,0 +1,131 @@
+✅ View:
+---------------------------------
+<form action="{{ route('subscriber_send_email') }}" method="post" class="form_subscribe_ajax">
+    @csrf
+    <div class="form-group">
+        <input type="text" name="email" class="form-control">
+        <span class="text-danger error-text email_error"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Subscribe Now">
+    </div>
+</form>
+
+<script>
+    (function($){
+        $(".form_subscribe_ajax").on('submit', function(e){
+            e.preventDefault();
+            $('#loader').show();
+            var form = this;
+            $.ajax({
+                url:$(form).attr('action'),
+                method:$(form).attr('method'),
+                data:new FormData(form),
+                processData:false,
+                dataType:'json',
+                contentType:false,
+                beforeSend:function(){
+                    $(form).find('span.error-text').text('');
+                },
+                success:function(data)
+                {
+                    $('#loader').hide();
+                    if(data.code == 0)
+                    {
+                        $.each(data.error_message, function(prefix, val) {
+                            $(form).find('span.'+prefix+'_error').text(val[0]);
+                        });
+                    }
+                    else if(data.code == 1)
+                    {
+                        $(form)[0].reset();
+                        iziToast.success({
+                            title: '',
+                            position: 'topRight',
+                            message: data.success_message,
+                        });
+                    }
+                    
+                }
+            });
+        });
+    })(jQuery);
+</script>
+<div id="loader"></div>
+
+
+✅ css:
+----------------------------------
+#loader {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.75) url(loading.gif) no-repeat center center;
+    z-index: 10000;
+}
+
+
+✅ Controller:
+----------------------------------
+
+public function send_email(Request $request)
+{
+    $validator = \Validator::make($request->all(),[
+        'email' => 'required|email'
+    ]);
+
+    if(!$validator->passes()) {
+        return response()->json(['code'=>0,'error_message'=>$validator->errors()->toArray()]);
+    } else {
+
+        $token = hash('sha256', time());
+
+        $obj = new Subscriber();
+        $obj->email = $request->email;
+        $obj->token = $token;
+        $obj->status = 0;
+        $obj->save();
+
+        $verification_link = url('subscriber/verify/'.$request->email.'/'.$token);
+        
+        // Send email
+        $subject = 'Subscriber Verification';
+        $message = 'Please click on the link below to confirm subscription:<br>';
+        $message .= '<a href="'.$verification_link.'">';
+        $message .= $verification_link;
+        $message .= '</a>';
+
+        \Mail::to($request->email)->send(new Websitemail($subject,$message));
+
+        return response()->json(['code'=>1,'success_message'=>'Please check your email to confirm subscription']);
+    }
+}
+
+public function verify($email,$token)
+{
+    $subscriber_data = Subscriber::where('email',$email)->where('token',$token)->first();
+
+    if($subscriber_data) {
+        
+        $subscriber_data->token = '';
+        $subscriber_data->status = 1;
+        $subscriber_data->update();
+
+        return redirect()->route('home')->with('success', 'Your subscription is verified successfully!');
+
+    } else {
+        return redirect()->route('home');
+    }
+
+}
+
+
+
+✅ web.php:
+----------------------------------
+Route::post('/subscriber/send-email', [SubscriberController::class, 'send_email'])->name('subscriber_send_email');
+Route::get('/subscriber/verify/{email}/{token}', [SubscriberController::class, 'verify'])->name('subscriber_verify');

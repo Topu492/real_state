@@ -1,0 +1,26 @@
+✅ Export Data as CSV
+-----------------------------------
+use Illuminate\Support\Facades\DB;
+
+public function exportSubscribers()
+{
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename=subscribers_'.date('Y-m-d_H-i-s').'.csv');
+    
+    $output = fopen('php://output', 'w');
+    fputcsv($output, ['SL', 'Email']);
+    
+    $subscribers = DB::table('subscribers')
+                   ->where('status', 1)
+                   ->orderBy('id', 'ASC')
+                   ->get();
+    
+    $i = 0;
+    foreach ($subscribers as $row) {
+        $i++;
+        fputcsv($output, [$i, $row->email]);
+    }
+    
+    fclose($output);
+    exit;
+}
