@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AdminPackageController;
 use App\Http\Controllers\Admin\AdminPageController;
 use App\Http\Controllers\Admin\AdminPostController;
 use App\Http\Controllers\Admin\AdminPropertyController;
+use App\Http\Controllers\Admin\AdminSettingController;
 use App\Http\Controllers\Admin\AdminSubscriberController;
 use App\Http\Controllers\Admin\AdminTestimonialController;
 use App\Http\Controllers\Admin\AdminTypeController;
@@ -217,6 +218,9 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 
     Route::get('/page/index', [AdminPageController::class, 'index'])->name('admin_page_index');
     Route::post('/page/update', [AdminPageController::class, 'update'])->name('admin_page_update');
+
+   Route::get('/setting/logo/index', [AdminSettingController::class, 'logo'])->name('admin_setting_logo_index');
+    Route::post('/setting/logo/update', [AdminSettingController::class, 'logo_update'])->name('admin_setting_logo_update');
 
 
 });

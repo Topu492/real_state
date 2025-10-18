@@ -11,13 +11,13 @@
 
             <li class="{{ Request::is('admin/dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_dashboard') }}"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
 
-            <li class="nav-item dropdown ">
+             <li class="nav-item dropdown {{ Request::is('admin/setting/*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-folder"></i><span>Website Setting</span></a>
                 <ul class="dropdown-menu">
-                    <li class=""><a class="nav-link" href=""><i class="fas fa-angle-right"></i> Logo</a></li>
-                    <li class=""><a class="nav-link" href=""><i class="fas fa-angle-right"></i> Favicon</a></li>
-                    <li class=""><a class="nav-link" href=""><i class="fas fa-angle-right"></i> Banner</a></li>
-                    <li class=""><a class="nav-link" href=""><i class="fas fa-angle-right"></i> Footer</a></li>
+                    <li class="{{ Request::is('admin/setting/logo/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin_setting_logo_index') }}"><i class="fas fa-angle-right"></i> Logo</a></li>
+                    <li class="{{ Request::is('admin/setting/favicon/*') ? 'active' : '' }}"><a class="nav-link" href=""><i class="fas fa-angle-right"></i> Favicon</a></li>
+                    <li class="{{ Request::is('admin/setting/banner/*') ? 'active' : '' }}"><a class="nav-link" href=""><i class="fas fa-angle-right"></i> Banner</a></li>
+                    <li class="{{ Request::is('admin/setting/footer/*') ? 'active' : '' }}"><a class="nav-link" href=""><i class="fas fa-angle-right"></i> Footer</a></li>
                 </ul>
             </li>
 
