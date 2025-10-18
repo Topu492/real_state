@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Mail\Websitemail;
 use App\Models\Admin;
+use App\Models\Agent;
+use App\Models\Package;
+use App\Models\Subscriber;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,8 +17,12 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        
-        return view('admin.dashboard.index');
+
+        $total_packages = Package::count();
+        $total_active_subscribers = Subscriber::where('status', 1)->count();
+        $total_active_customers = User::where('status', 1)->count();
+        $total_active_agents = Agent::where('status', 1)->count();
+        return view('admin.dashboard.index', compact('total_packages','total_active_subscribers', 'total_active_customers', 'total_active_agents'));
     }
 
     public function login()

@@ -18,7 +18,9 @@ class UserController extends Controller
      public function dashboard()
     {
         
-        return view('user.dashboard.index');
+        $total_messages = Message::where('user_id', Auth::guard('web')->user()->id)->count();
+        $total_wishlist_items = Wishlist::where('user_id', Auth::guard('web')->user()->id)->count();
+        return view('user.dashboard.index', compact('total_messages', 'total_wishlist_items'));
     }
     public function registration()
     {

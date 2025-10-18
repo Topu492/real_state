@@ -26,8 +26,13 @@ class AgentController extends Controller
      public function dashboard()
     {
        
+        $total_active_properties = Property::where('agent_id', Auth::guard('agent')->user()->id)->where('status', 'Active')->count();
+        $total_pending_properties = Property::where('agent_id', Auth::guard('agent')->user()->id)->where('status', 'Pending')->count();
+        $total_featured_properties = Property::where('agent_id', Auth::guard('agent')->user()->id)->where('status', 'Active')->where('is_featured', 'Yes')->count();
 
-        return view('agent.dashboard.index');
+        $recent_properties = Property::where('agent_id', Auth::guard('agent')->user()->id)->where('status', 'Active')->orderBy('id','desc')->take(5)->get();
+
+        return view('agent.dashboard.index', compact('total_active_properties','total_pending_properties','total_featured_properties', 'recent_properties'));
     }
 
     public function registration()

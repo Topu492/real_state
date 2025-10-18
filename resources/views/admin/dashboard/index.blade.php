@@ -19,7 +19,7 @@
                             <h4>Total Packages</h4>
                         </div>
                         <div class="card-body">
-                          
+                          {{ $total_packages }}
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                             <h4>Total Active Subscribers</h4>
                         </div>
                         <div class="card-body">
-                            
+                             {{ $total_active_subscribers }}
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                             <h4>Total Active Customers</h4>
                         </div>
                         <div class="card-body">
-                           
+                            {{ $total_active_customers }}
                         </div>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                             <h4>Total Active Agents</h4>
                         </div>
                         <div class="card-body">
-                           
+                            {{ $total_active_agents }}
                         </div>
                     </div>
                 </div>

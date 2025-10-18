@@ -1,7 +1,7 @@
 @extends('front.layouts.master')
 
 @section('main_content')
-<div class="page-top" style="background-image">
+<div class="page-top" style="background-image:">
     <div class="bg"></div>
     <div class="container">
         <div class="row">
@@ -27,13 +27,13 @@
                 <div class="row box-items">
                     <div class="col-md-4">
                         <div class="box1">
-                            <h4></h4>
+                            <h4>{{ $total_messages }}</h4>
                             <p>Total Messages</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="box2">
-                            <h4></h4>
+                            <h4>{{ $total_wishlist_items }}</h4>
                             <p>Total Wishlist Items</p>
                         </div>
                     </div>
